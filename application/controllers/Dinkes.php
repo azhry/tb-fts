@@ -3,11 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dinkes extends MY_Controller
 {
+	private $wilayah;
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->module = 'dinkes';
-
+        $this->load->model('Kota_kabupaten_m');
 		$this->data['id_pengguna']	= $this->session->userdata('id_pengguna');
 		$this->data['email']		= $this->session->userdata('email');
 		$this->data['id_role']		= $this->session->userdata('id_role');
@@ -34,7 +36,8 @@ class Dinkes extends MY_Controller
 			$this->flashmsg('Anda harus login sebagai dinas kesehatan untuk mengakses halaman tersebut', 'danger');
 			redirect('login');
 		}
-
+		$this->wilayah = $this->Kota_kabupaten_m->get_row(['id_kota_kabupaten'=>$this->data['admin']->id_kota_kabupaten]);
+		$this->data['wilayah'] = $this->wilayah->kota_kabupaten;
 	}
 
 	public function index()
@@ -65,6 +68,19 @@ class Dinkes extends MY_Controller
 
 	public function tambah_data_penderita()
 	{
-		echo 'Form penambahan data penderita sesuai dengan id kota kabupaten';
+		if($this->POST("submit")){
+			$this->load->model('Penderita_tb_m');
+           $this->data['penderita'] = [
+                 "id_kota_kabupaten" => $this->wilayah->id_kota_kabupaten,
+                 "jumlah"=>$this->POST("jumlah"),
+                 "tahun"=>$this->POST("tahun")
+           ];
+           $this->Penderita_tb_m->insert($this->data['penderita']);
+           $this->flashmsg('Penderita TB Berhasil Ditambahkan');
+		}
+		$this->data['title'] = 'Form penambahan jumlah penderita TB';
+		$this->data['content'] = 'tambah_penderita';
+		$this->template($this->data, $this->module);
+
 	}
 }

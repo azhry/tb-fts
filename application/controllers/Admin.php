@@ -134,6 +134,58 @@ class Admin extends MY_Controller
 
 	public function dashboard_fts()
 	{
-		echo 'dashboard fts';
+		$this->load->model('kota_kabupaten_m');
+		$this->data['kota']		= $this->kota_kabupaten_m->get();
+		$this->data['title']	= 'Fuzzy Times Series';
+		$this->data['content']	= 'dashboard_fts';
+		$this->template($this->data, $this->module);
+	}
+
+	public function hasil_peramalan_fts(){
+		if($this->POST('submit')){
+		   $tahun = array();  
+           $jumlah_penderita = array();
+           $hasil_peramlan = array();
+
+           $this->load->model('kota_kabupaten_m');
+           $this->load->library('FuzzyTimeSeries');
+           $this->load->model('penderita_tb_m');   
+           $result = $this->penderita_tb_m->get_by_order("tahun","asc",["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')]);
+           foreach ($result as $row) {
+           	  array_push($jumlah_penderita, $row->jumlah);
+           	  array_push($tahun, $row->tahun);
+           }
+           array_push($tahun, ($tahun[sizeof($tahun)-1]+1));
+   
+           $konfigurasi["D1"] = $this->input->post('d1');
+	       $konfigurasi["D2"] = $this->input->post('d2');
+	       $log_hasil_pelatihan = $this->fuzzytimeseries->pelatihan($jumlah_penderita,$konfigurasi);
+	     
+           array_push($hasil_peramlan, 0);
+           for($i=0;$i<sizeof($jumlah_penderita);$i++){
+              array_push($hasil_peramlan, $this->fuzzytimeseries->forecast($jumlah_penderita[$i]));
+           }
+           
+           $this->data['peramalan_fts'] = [
+              "tahun" => $tahun,
+              "data_real" => $jumlah_penderita,
+              "data_peramalan" => $hasil_peramlan,
+              "wilayah" => $this->kota_kabupaten_m->get(["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')])[0]->kota_kabupaten,
+              "log_pelatihan" => [
+                                    "fuzzy_set"        => $log_hasil_pelatihan["fuzzy"],
+                                    "jumlah_fuzzy_set" => $log_hasil_pelatihan["counting"],
+                                    "re-divide"        => $log_hasil_pelatihan["redivide"],
+                                    "himpunan_fuzzy"   => $log_hasil_pelatihan["himpunan_fuzzy"],
+                                    "flr"              => $log_hasil_pelatihan["fuzzy_logical_relationship"],
+                                    "flrg"             => $log_hasil_pelatihan["fuzzy_logical_relationship_group"]
+              ]
+           ];
+
+           $this->flashmsg('Hasil Peramalan daerah '.$this->data['peramalan_fts']['wilayah']." tahun ".$tahun[0]." sampai ".$tahun[sizeof($tahun)-1]);
+		}
+		$this->data['kota']		= $this->kota_kabupaten_m->get();
+		$this->data['title']	= 'Fuzzy Times Series';
+		$this->data['content']	= 'hasil_peramalan_fts';
+		$this->template($this->data, $this->module);
 	}
 }

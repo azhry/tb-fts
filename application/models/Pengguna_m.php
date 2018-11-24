@@ -29,7 +29,7 @@ class Pengguna_m extends MY_Model
 	{
 		$this->db->select('*')
 			->from($this->data['table_name'])
-			->join('admin_dinkes', $this->data['table_name'] . '.id_pengguna = pengguna.id_pengguna')
+			->join('admin_dinkes', $this->data['table_name'] . '.id_pengguna = admin_dinkes.id_pengguna')
 			->join('kota_kabupaten', 'admin_dinkes.id_kota_kabupaten = kota_kabupaten.id_kota_kabupaten')
 			->where(['pengguna.id_role' => 2]);
 		$query = $this->db->get();

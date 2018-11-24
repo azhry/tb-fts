@@ -3,7 +3,7 @@
 	<div class="page-head">
 		<!-- BEGIN PAGE TITLE -->
 		<div class="page-title">
-			<h1>Data Penderita TB</h1>
+			<h1>Data Penderita TB daerah <b><?= $wilayah ?></b></h1>
 		</div>
 		<!-- END PAGE TITLE -->
 	</div>
@@ -34,13 +34,10 @@
 						<thead>
 							<tr>
 								<th style="text-align: center;">
-									Kota / Kabupaten
+									Tahun
 								</th>
 								<th style="text-align: center;">
 									Jumlah
-								</th>
-								<th style="text-align: center;">
-									Tahun
 								</th>
 								<th width="200" style="text-align: center;">
 									Aksi
@@ -51,13 +48,10 @@
 							<?php foreach ($penderita as $row): ?>
 								<tr class="odd gradeX">
 									<td>
-										<?= $row->kota_kabupaten ?>
+										<center><?= $row->tahun ?></center>
 									</td>
 									<td>
-										<?= $row->jumlah ?>
-									</td>
-									<td>
-										<?= $row->tahun ?>
+										<center><?= $row->jumlah ?></center>
 									</td>
 									<td>
 										<?= form_open('dinkes/data-penderita-tb/' . $row->id) ?>
