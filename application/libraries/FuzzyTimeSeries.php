@@ -110,7 +110,7 @@ class FuzzyTimeSeries
 	}
 
 	private function hitungInterval(){       
-       
+       $set = [];
        $Dmax = max($this->data);
        $Dmin = min($this->data);
        $this->interval = abs(round((($Dmax+$this->D1)-($Dmin+$this->D2))/$this->basis));
@@ -137,6 +137,8 @@ class FuzzyTimeSeries
    }
 
    private function reDivide($fuzzy_set){
+       $counting_array = [];
+       $new_fuzzy_set = [];
        $counting_array;
        $re_divide;
 
@@ -151,8 +153,12 @@ class FuzzyTimeSeries
           $counting_array[$index]["jumlah"] = $count;
        }
        $this->log["counting"] = $counting_array;
-       
-       $re_divide = round(sizeof($this->data)/$this->interval);
+
+       if($this->interval > 0 ){
+          $re_divide = round(sizeof($this->data)/$this->interval);
+       }else{
+          $re_divide = 0;
+       }
        
 
        $limit_count = 0;
@@ -194,7 +200,7 @@ class FuzzyTimeSeries
    }
     
    private function tentukanHimpunanFuzzy($fuzzy_set){
-        $himpunan_fuzzy;
+        $himpunan_fuzzy = [];
         for($i=0;$i<sizeof($this->data);$i++){
            for($j=1;$j<=sizeof($fuzzy_set);$j++){
                $index = "A".$j;
@@ -215,7 +221,7 @@ class FuzzyTimeSeries
         return $himpunan_fuzzy;}   
 	
    private function fuzzyLogicalRelationship($himpunan_fuzzy){
-         $flr;
+         $flr = [];
          for($i=0;$i<sizeof($himpunan_fuzzy);$i++){
             if($i != (sizeof($himpunan_fuzzy)-1)){
                $flr[$i]["current_state"] = $himpunan_fuzzy[$i]["fuzzy"];
@@ -227,7 +233,7 @@ class FuzzyTimeSeries
     }
 
     private function fuzzyLogicalRelationshipGroup($fuzzy_logical_relationship,$fuzzy_set){
-       $flrg;
+       $flrg= [];
        for($i=0;$i<sizeof($fuzzy_set);$i++){
           $index = "A".($i+1);
           $group = array();
@@ -244,6 +250,9 @@ class FuzzyTimeSeries
           $flrg[$i]["group"] = $arr_group;
 
           $this->log["fuzzy_logical_relationship_group"] = $flrg;
+       }
+       if(sizeof($fuzzy_set) == 0){
+          $this->log["fuzzy_logical_relationship_group"] = 0;    
        }
        return $flrg;}
 }

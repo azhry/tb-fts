@@ -42,6 +42,7 @@ class Dinkes extends MY_Controller
 
 	public function index()
 	{
+		
 		$this->load->model('penderita_tb_m');
 		$this->data['penderita']	= $this->penderita_tb_m->get(['id_kota_kabupaten' => $this->data['admin']->id_kota_kabupaten]);
 		$this->data['title']		= 'Dashboard';
