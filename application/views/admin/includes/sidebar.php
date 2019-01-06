@@ -29,6 +29,12 @@
                         <span class="title">Daftar Kota/Kabupaten</span>
                     </a>
                 </li>
+                  <li>
+                    <a href="<?= base_url('admin/daftar_penderita') ?>">
+                        <i class="icon-list"></i>
+                        <span class="title">Data Penderita TB</span>
+                    </a>
+                </li>
                 <li>
                     <a href="<?= base_url('admin/dashboard-fts') ?>">
                         <i class="icon-list"></i>

@@ -54,6 +54,67 @@ class Admin extends MY_Controller
 		$this->template($this->data, $this->module);
 	}
 
+	public function daftar_penderita($id_kota="",$id_hapus=""){
+		$this->load->model('penderita_tb_m');
+		$this->load->model('kota_kabupaten_m');
+		$this->data['penderita']	= $this->penderita_tb_m->get(['id_kota_kabupaten' => $id_kota]);
+		$this->data['nama_kota']	= $this->kota_kabupaten_m->get_row(["id_kota_kabupaten" => $id_kota]);
+		if(empty($this->data['nama_kota'])){
+            $this->data['nama_kota'] = "Pilih Kota penderita TB";
+		}else{
+			$this->data['nama_kota'] = "Data penderita TB ".$this->data['nama_kota']->kota_kabupaten;
+		}
+		if(!empty($id_hapus)){
+             $this->penderita_tb_m->delete($id_hapus);
+             $this->flashmsg('Data penderita tb'.$this->data['nama_kota'].' berhasil dihapus');
+             redirect('admin/daftar_penderita/'.$id_kota);
+		}
+
+		$this->data['kota']		= $this->kota_kabupaten_m->get();
+		$this->data['title']	= 'Daftar Penderita';
+		$this->data['content']	= 'daftar_penderita';
+		$this->template($this->data, $this->module);
+	}
+
+	public function tambah_data_penderita($id_kota="")
+	{
+		$this->load->model('kota_kabupaten_m');
+		if(!empty($id_kota)){
+           if($this->POST("submit")){
+			   $this->load->model('Penderita_tb_m');
+	           $this->data['penderita'] = [
+	                 "id_kota_kabupaten" => $id_kota,
+	                 "jumlah"=>$this->POST("jumlah"),
+	                 "tahun"=>$this->POST("tahun")
+	           ];
+	           $this->Penderita_tb_m->insert($this->data['penderita']);
+	           $this->flashmsg('Penderita TB Berhasil Ditambahkan');
+	           redirect('admin/daftar_penderita/'.$id_kota);    
+    	   }
+    	   $this->data['wilayah']	= $this->kota_kabupaten_m->get_row(["id_kota_kabupaten" => $id_kota])->kota_kabupaten;
+    	   $this->data['id_kota'] = $id_kota;
+ 		   $this->data['title'] = 'Form penambahan jumlah penderita TB';
+		   $this->data['content'] = 'tambah_penderita';
+		   $this->template($this->data, $this->module);
+		}else{
+           $this->flashmsg('Kota belum dipilih','danger');
+           redirect('admin/daftar_penderita/');
+		}
+	}
+
+	public function hapus_penderita_tb($id,$id_kota){
+        $this->load->model('penderita_tb_m');
+        $this->load->model('kota_kabupaten_m');
+		$this->data['id'] = $this->uri->segment(3);
+		$this->data['nama_kota']	= $this->kota_kabupaten_m->get_row(["id_kota_kabupaten" => $id_kota])->kota_kabupaten;
+		if (isset($this->data['id']))
+		{
+			$this->penderita_tb_m->delete($this->data['id']);
+			$this->flashmsg('Data penderita tb'.$this->data['nama_kota'].' berhasil dihapus');
+			redirect('admin/daftar_penderita/'.$id_kota);
+		}
+	}
+
 	public function daftar_kota()
 	{
 		$this->load->model('kota_kabupaten_m');
@@ -181,7 +242,7 @@ class Admin extends MY_Controller
               ]
            ];
 
-           $this->flashmsg('Hasil Peramalan daerah '.$this->data['peramalan_fts']['wilayah']." tahun ".$tahun[0]." sampai ".$tahun[sizeof($tahun)-1]);
+           // $this->flashmsg('Hasil Peramalan daerah '.$this->data['peramalan_fts']['wilayah']." tahun ".$tahun[0]." sampai ".$tahun[sizeof($tahun)-1]);
 		}
 		$this->data['kota']		= $this->kota_kabupaten_m->get();
 		$this->data['title']	= 'Fuzzy Times Series';

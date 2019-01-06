@@ -83,6 +83,27 @@
 						</a>
 					</div>
 				</div>
+				<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+					<div class="dashboard-stat2">
+						<a href="<?= base_url('admin/daftar_penderita') ?>">
+							<div class="display">
+								<div class="number">
+									<h3 class="font-green-sharp"><?= count($kota) ?></h3>
+									<small>Data penderita TB</small>
+								</div>
+								<div class="icon">
+									<i class="icon-list"></i>
+								</div>
+							</div>
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 100%;" class="progress-bar progress-bar-success green-sharp">
+									</span>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
 			</div>
 			<!-- END PAGE CONTENT INNER -->
 		</div>

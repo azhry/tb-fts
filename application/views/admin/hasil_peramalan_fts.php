@@ -85,7 +85,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+       <!--  <div class="col-md-12">
             <div class="portlet box green">
                 <div class="portlet-title">
                     <div class="caption">
@@ -103,7 +103,7 @@
                         </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-12">
             <div class="portlet box green">
                 <div class="portlet-title">
