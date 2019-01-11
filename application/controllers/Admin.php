@@ -226,6 +226,9 @@ class Admin extends MY_Controller
            for($i=0;$i<sizeof($jumlah_penderita);$i++){
               array_push($hasil_peramlan, $this->fuzzytimeseries->forecast($jumlah_penderita[$i]));
            }
+
+           $this->data['mse'] = $this->setMSE($jumlah_penderita,$hasil_peramlan,$tahun);
+           $this->data['mape'] = $this->setMAPE($jumlah_penderita,$hasil_peramlan,$tahun);
            
            $this->data['peramalan_fts'] = [
               "tahun" => $tahun,
@@ -248,5 +251,55 @@ class Admin extends MY_Controller
 		$this->data['title']	= 'Fuzzy Times Series';
 		$this->data['content']	= 'hasil_peramalan_fts';
 		$this->template($this->data, $this->module);
+	}
+
+	private function setMSE($aktual,$ramal,$tahun){
+		$mse = [];
+		array_splice($tahun,0,1);
+        array_splice($tahun,sizeof($tahun)-1,sizeof($tahun)-1);
+	
+		array_splice($aktual,0,1);
+      
+        array_splice($ramal,0,1);
+        array_splice($ramal,sizeof($ramal)-1,sizeof($ramal)-1);
+     
+         
+        $sum = 0;
+        for($i=0;$i<sizeof($tahun);$i++){
+           $mse[$i]["tahun"] = $tahun[$i];
+           $mse[$i]["aktual"] = $aktual[$i];
+           $mse[$i]["output"] = $ramal[$i];
+           $mse[$i]["selisih"] = pow($aktual[$i] - $ramal[$i], 2); 
+           $sum = $sum + pow($aktual[$i] - $ramal[$i], 2);
+        }
+
+        $mse["hasil"] = $sum / sizeof($tahun);
+
+        return $mse;
+	}
+
+	private function setMAPE($aktual,$ramal,$tahun){
+		$mape= [];
+		array_splice($tahun,0,1);
+        array_splice($tahun,sizeof($tahun)-1,sizeof($tahun)-1);
+	
+		array_splice($aktual,0,1);
+      
+        array_splice($ramal,0,1);
+        array_splice($ramal,sizeof($ramal)-1,sizeof($ramal)-1);
+     
+         
+        $sum = 0;
+        for($i=0;$i<sizeof($tahun);$i++){
+           $mape[$i]["tahun"] = $tahun[$i];
+           $mape[$i]["aktual"] = $aktual[$i];
+           $mape[$i]["output"] = $ramal[$i];
+           $mape[$i]["selisih"] = abs((($aktual[$i] - $ramal[$i])/$aktual[$i])*100)+" %"; 
+           $sum = $sum + abs((($aktual[$i] - $ramal[$i])/$aktual[$i])*100);
+        }
+
+        $mape["hasil"] = $sum / sizeof($tahun);
+
+        return $mape;
 	}
 }
