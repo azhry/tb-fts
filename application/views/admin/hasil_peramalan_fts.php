@@ -38,9 +38,14 @@
 								</a>
 							</div>
 						</div>
+                        <div class="btn-group btn-group btn-group-justified">
+                            <a   id="perbandingan" class="btn purple"><span class="md-click-circle md-click-animate" style="height: 161px; width: 161px; top: -68.5px; left: -29.5px;"></span><i class="fa fa-bar-chart-o"></i> Perbandingan</a>
+                            <a  id="aktual" class="btn blue"><span class="md-click-circle md-click-animate" style="height: 161px; width: 161px; top: -64.5px; left: -15.5px;"></span><i class="fa fa-bar-chart-o"></i> Aktual</a>
+                            <a  id="peramalan" class="btn green"><i class="fa fa-bar-chart-o"></i> Peramalan</a>
+                        </div>
 						<div class="portlet-body">
 							<div id="chart_2" class="chart">
-
+                             <!-- CHART HERE -->
 							</div>
 						</div>
 					</div>
@@ -235,17 +240,34 @@
 <script>
 jQuery(document).ready(function() {       
    // initiate layout and plugins
+   var wilayah = "<?= $peramalan_fts['wilayah']?>";
+   var year = [<?php echo '"'.implode('","', $peramalan_fts["tahun"]).'"' ?>];
+   var ramal = forecast_type(year);
+   var aktual = aktual_type(year);
    Metronic.init(); // init metronic core components
-   ChartsFlotcharts.initCharts();
+   ChartsFlotcharts.initCharts(ramal,aktual,year,wilayah);
+        
+    $("#perbandingan").click(function(){
+         ramal = forecast_type(year);
+         aktual = aktual_type(year);
+         ChartsFlotcharts.initCharts(ramal,aktual,year,wilayah);
+    });
+
+    $("#aktual").click(function(){
+        aktual = aktual_type(year);
+       ChartsFlotcharts.initCharts([],aktual,year,wilayah);
+    });
+
+    $("#peramalan").click(function(){
+        ramal = forecast_type(year);
+        ChartsFlotcharts.initCharts(ramal,[],year,wilayah);
+    });
 });
-</script>
 
-<script type="text/javascript">
-	var ChartsFlotcharts = function() {
-
+    var ChartsFlotcharts = setchart();
+    function setchart(){
     return {
         //main function to initiate the module
-
         init: function() {
 
             Metronic.addResizeHandler(function() {
@@ -254,40 +276,18 @@ jQuery(document).ready(function() {
 
         },
 
-        initCharts: function() {
+        initCharts: function(hasil_ramal, hasil_aktual, year, wilayah) {
 
-            var wilayah = "<?= $peramalan_fts['wilayah']?>";
-            var real = [<?php echo '"'.implode('","', $peramalan_fts["data_real"]).'"' ?>];
-            var forecast = [<?php echo '"'.implode('","', $peramalan_fts["data_peramalan"]).'"' ?>];
-            var year = [<?php echo '"'.implode('","', $peramalan_fts["tahun"]).'"' ?>];
+            ramal = hasil_ramal;
+            aktual = hasil_aktual;
 
             if (!jQuery.plot) {
                 return;
             }
+
             function chart2() {
                 if ($('#chart_2').size() != 1) {
                     return;
-                }
-
-                function randValue() {
-                    return (Math.floor(Math.random() * (1 + 40 - 20))) + 20;
-                }
-
-
-                var ramal = [];
-
-                for(i=0;i<year.length;i++){
-                    if(i!=0){
-                      ramal[i] = [year[i],forecast[i]];
-                    }
-                }
-                
-                var aktual = [];
-                
-                for(i=0;i<year.length;i++){
-                    if(i != (year.length)-1){
-                       aktual[i] = [year[i],real[i]];
-                    }
                 }
 
                 var plot = $.plot($("#chart_2"), [{
@@ -388,5 +388,63 @@ jQuery(document).ready(function() {
         },
     };
 
-}();
+};
+    
+
+function forecast_type(year){
+    var ramal = [];
+    var forecast = [<?php echo '"'.implode('","', $peramalan_fts["data_peramalan"]).'"' ?>];
+    for(i=0;i<year.length;i++){
+        if(i!=0){
+          ramal[i] = [year[i],forecast[i]];
+        }
+    }
+    return ramal;
+}
+
+function aktual_type(year){   
+    var aktual = [];
+    var real = [<?php echo '"'.implode('","', $peramalan_fts["data_real"]).'"' ?>];
+    for(i=0;i<year.length;i++){
+        if(i != (year.length)-1){
+           aktual[i] = [year[i],real[i]];
+        }
+    }
+    return aktual;
+}
+
+function setCookie(cname,cvalue,exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires=" + d.toGMTString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie() {
+  var user=getCookie("username");
+  if (user != "") {
+    return user;
+  } else {
+     user = prompt("Please enter your name:","");
+     if (user != "" && user != null) {
+       setCookie("username", user, 30);
+     }
+  }
+}
 </script>

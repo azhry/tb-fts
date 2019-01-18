@@ -253,6 +253,11 @@ class Admin extends MY_Controller
 		$this->template($this->data, $this->module);
 	}
 
+	public function aksi(){
+		var_dump($this->data);
+		exit();
+	}
+
 	private function setMSE($aktual,$ramal,$tahun){
 		$mse = [];
 		array_splice($tahun,0,1);
