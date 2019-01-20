@@ -14,13 +14,13 @@
                 <li>
                     <a href="<?= base_url('admin') ?>">
                         <i class="icon-home"></i>
-                        <span class="title">Dashboard</span>
+                        <span class="title">Home</span>
                     </a>
                 </li>
                 <li>
                     <a href="<?= base_url('admin/daftar-pengguna') ?>">
                         <i class="icon-list"></i>
-                        <span class="title">Daftar Pengguna</span>
+                        <span class="title">Data Pengguna</span>
                     </a>
                 </li>
                 <li>

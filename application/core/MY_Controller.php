@@ -2,7 +2,7 @@
 
 class MY_Controller extends CI_Controller
 {
-  	public $title 		= 'Dinas Kesehatan Provinsi Sumatera Selatan';
+  	public $title 		= 'Sistem Peramalan Penderita TB Dengan Metode Fuzzy Time Series Chen';
 	
 	public function __construct()
 	{
