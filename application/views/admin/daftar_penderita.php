@@ -56,10 +56,7 @@
 							<div class="col-md-6">
 								<div class="btn-group">
 									<?php 
-									    $id = "";
-									    if(!empty($penderita)){
-                                             $id = $penderita[0]->id_kota_kabupaten;
-									    }
+									    $id = $id_kota;
 									?>
 									<a href="<?= base_url()?>admin/tambah_data_penderita/<?= $id ?>" id="sample_editable_1_new" class="btn green">
 									Add New <i class="fa fa-plus"></i>

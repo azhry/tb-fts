@@ -58,6 +58,7 @@ class Admin extends MY_Controller
 		$this->load->model('penderita_tb_m');
 		$this->load->model('kota_kabupaten_m');
 		$this->data['penderita']	= $this->penderita_tb_m->get(['id_kota_kabupaten' => $id_kota]);
+		$this->data['id_kota']      = $id_kota;
 		$this->data['nama_kota']	= $this->kota_kabupaten_m->get_row(["id_kota_kabupaten" => $id_kota]);
 		if(empty($this->data['nama_kota'])){
             $this->data['nama_kota'] = "Pilih Kota penderita TB";
