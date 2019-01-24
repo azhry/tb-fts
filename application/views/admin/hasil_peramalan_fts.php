@@ -52,68 +52,6 @@
 				</div>
 			</div>
            <div class="row margin-top-10">
-           <div class="col-md-6">
-            <div class="portlet box yellow">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa  fa-check-square-o"></i>MSE (Mean Square Error) 
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                        <div class="form-body">                       
-                                <table class="table">
-                                    <th>Tahun</th>
-                                    <th>Aktual (X)</th>
-                                    <th>Ramal (Y)</th>
-                                    <th>(X - Y)^2</th>
-                                    <?php 
-                                       foreach ($mse as $value) {
-                                    ?>
-                                    <tr>
-                                        <td><?= $value["tahun"]?></td>
-                                        <td><?= $value["aktual"]?></td>
-                                        <td><?= $value["output"]?></td>
-                                        <td><?= $value["selisih"]?></td>
-                                    </tr>
-                                <?php } ?>
-                                </table>
-                                <h4><b><u>MSE</u> : <?= $mse['hasil']; ?></b></h4>
-                        </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="portlet box yellow">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa  fa-check-square"></i>MAPE (Mean Absolute Percentage Error) 
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                        <div class="form-body">                       
-                                <table class="table">
-                                    <th>Tahun</th>
-                                    <th>Aktual (X)</th>
-                                    <th>Ramal (Y)</th>
-                                    <th>| ((X - Y)/X)x100 |</th>
-                                    <?php 
-                                       foreach ($mape as $value) {
-                                    ?>
-                                    <tr>
-                                        <td><?= $value["tahun"]?></td>
-                                        <td><?= $value["aktual"]?></td>
-                                        <td><?= $value["output"]?></td>
-                                        <td><?= $value["selisih"]?></td>
-                                    </tr>
-                                <?php } ?>
-                                </table>
-                                <h4><b><u>MAPE</u> : <?= $mape['hasil']; ?> %</b></h4>
-                        </div>
-                </div>
-            </div>
-        </div>
-        
-         
         <div class="col-md-12">
             <div class="portlet box green">
                 <div class="portlet-title">
@@ -231,7 +169,66 @@
                 </div>
             </div>
         </div>
-
+        <div class="col-md-6">
+            <div class="portlet box yellow">
+                <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa  fa-check-square-o"></i>MSE (Mean Square Error) 
+                </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-body">                       
+                            <table class="table">
+                                <th>Tahun</th>
+                                <th>Aktual (X)</th>
+                                <th>Ramal (Y)</th>
+                                <th>(X - Y)^2</th>
+                                <?php 
+                                   foreach ($mse as $value) {
+                                ?>
+                                <tr>
+                                    <td><?= $value["tahun"]?></td>
+                                    <td><?= $value["aktual"]?></td>
+                                    <td><?= $value["output"]?></td>
+                                    <td><?= $value["selisih"]?></td>
+                                </tr>
+                            <?php } ?>
+                            </table>
+                            <h4><b><u>MSE</u> : <?= $mse['hasil']; ?></b></h4>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet box yellow">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa  fa-check-square"></i>MAPE (Mean Absolute Percentage Error) 
+                        </div>
+                    </div>
+                    <div class="portlet-body form">
+                            <div class="form-body">                       
+                                    <table class="table">
+                                        <th>Tahun</th>
+                                        <th>Aktual (X)</th>
+                                        <th>Ramal (Y)</th>
+                                        <th>| ((X - Y)/X)x100 |</th>
+                                        <?php 
+                                           foreach ($mape as $value) {
+                                        ?>
+                                        <tr>
+                                            <td><?= $value["tahun"]?></td>
+                                            <td><?= $value["aktual"]?></td>
+                                            <td><?= $value["output"]?></td>
+                                            <td><?= $value["selisih"]?></td>
+                                        </tr>
+                                    <?php } ?>
+                                    </table>
+                                    <h4><b><u>MAPE</u> : <?= $mape['hasil']; ?> %</b></h4>
+                            </div>
+                    </div>
+                </div>
+            </div>
     </div>
 			<!-- END PAGE CONTENT INNER -->
 </div>

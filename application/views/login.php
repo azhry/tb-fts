@@ -52,8 +52,8 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN LOGO -->
 <div class="logo">
   <a href="#">
-    <h3>Sistem Pendataan Penderita TB</h3>
-    <h4>Dinas Kesehatan Provinsi Sumatera Selatan</h4>
+    <h3>Sistem Peramalan Penderita TB</h3>
+    <h4>Dengan Metode Fuzzy Time Series Chen</h4>
   </a>
 </div>
 <!-- END LOGO -->

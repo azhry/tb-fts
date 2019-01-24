@@ -3,7 +3,7 @@
 			<div class="page-head">
 				<!-- BEGIN PAGE TITLE -->
 				<div class="page-title">
-					<h1>Dashboard Peramlaan Penderita TB</h1>
+					<h1>Dashboard Peramalan Penderita TB</h1>
 				</div>
 				<!-- END PAGE TITLE -->
 			</div>

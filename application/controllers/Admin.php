@@ -293,17 +293,15 @@ class Admin extends MY_Controller
       
         array_splice($ramal,0,1);
         array_splice($ramal,sizeof($ramal)-1,sizeof($ramal)-1);
-     
-         
+     	
         $sum = 0;
         for($i=0;$i<sizeof($tahun);$i++){
            $mape[$i]["tahun"] = $tahun[$i];
            $mape[$i]["aktual"] = $aktual[$i];
            $mape[$i]["output"] = $ramal[$i];
-           $mape[$i]["selisih"] = abs((($aktual[$i] - $ramal[$i])/$aktual[$i])*100)+" %"; 
+           $mape[$i]["selisih"] = abs((($aktual[$i] - $ramal[$i])/$aktual[$i])*100) . " %"; 
            $sum = $sum + abs((($aktual[$i] - $ramal[$i])/$aktual[$i])*100);
         }
-
         $mape["hasil"] = $sum / sizeof($tahun);
 
         return $mape;
