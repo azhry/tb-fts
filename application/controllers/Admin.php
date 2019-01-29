@@ -278,7 +278,7 @@ class Admin extends MY_Controller
               "log_pelatihan" => [
                                     "fuzzy_set"        => $log_hasil_pelatihan["fuzzy"],
                                     "jumlah_fuzzy_set" => $log_hasil_pelatihan["counting"],
-                                    "re-divide"        => $log_hasil_pelatihan["redivide"],
+                                    // "re-divide"        => $log_hasil_pelatihan["redivide"],
                                     "himpunan_fuzzy"   => $log_hasil_pelatihan["himpunan_fuzzy"],
                                     "flr"              => $log_hasil_pelatihan["fuzzy_logical_relationship"],
                                     "flrg"             => $log_hasil_pelatihan["fuzzy_logical_relationship_group"]

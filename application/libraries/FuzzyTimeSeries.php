@@ -21,8 +21,8 @@ class FuzzyTimeSeries
 	   $result = null;
        if($this->setDataAtribut($data_latih, $konfigurasi)){
        	  $this->setBasis(max($this->data), min($this->data));
-	         $fuzzy_set  = $this->hitungInterval();
-	         $this->fuzzy = $this->reDivide($fuzzy_set);
+	         $this->fuzzy  = $this->hitungInterval();
+	         // $this->fuzzy = $this->reDivide($fuzzy_set);
 	         $himpunan_fuzzy = $this->tentukanHimpunanFuzzy($this->fuzzy);
 	         $fuzzy_logical_relationship = $this->fuzzyLogicalRelationship($himpunan_fuzzy);
 	         $this->fuzzy_logical_relationship_grup = $this->fuzzyLogicalRelationshipGroup($fuzzy_logical_relationship,$this->fuzzy);
@@ -133,6 +133,19 @@ class FuzzyTimeSeries
           }
        }
        $this->log["fuzzy"]= $set;
+
+       for($i=1;$i<=sizeof($set);$i++){
+          $index = "A".$i;
+          $count = 0;
+          for($j=0;$j<sizeof($this->data);$j++){
+            if($this->data[$j] >= $set[$index][0] && $this->data[$j] < $set[$index][1]){
+               $count++;
+            }
+          }
+          $counting_array[$index]["jumlah"] = $count;
+       }
+       $this->log["counting"] = $counting_array;
+
        return $set;
    }
 
