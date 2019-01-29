@@ -20,7 +20,7 @@
 			<!-- END PAGE BREADCRUMB -->
 			<!-- BEGIN PAGE CONTENT INNER -->
 			<div class="row margin-top-10">
-				<div class="col-lg-12 col-md-3 col-sm-6 col-xs-12">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<?= $this->session->flashdata('msg') ?>
 					<div class="portlet box red">
 						<div class="portlet-title">
