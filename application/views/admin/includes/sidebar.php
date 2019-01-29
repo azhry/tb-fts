@@ -41,6 +41,12 @@
                         <span class="title">Dashboard FTS</span>
                     </a>
                 </li>
+                <li>
+                    <a href="<?= base_url('admin/akurasi-peramalan') ?>">
+                        <i class="icon-list"></i>
+                        <span class="title">Akurasi Peramalan</span>
+                    </a>
+                </li>
             </ul>
             <!-- END SIDEBAR MENU -->
         </div>

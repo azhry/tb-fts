@@ -38,6 +38,16 @@ class Admin extends MY_Controller
 		$this->template($this->data, $this->module);
 	}
 
+	public function akurasi_peramalan()
+	{
+		$this->load->model('record_peramalan_m');
+		$this->load->model('kota_kabupaten_m');
+		$this->data['record']	= $this->record_peramalan_m->get();
+		$this->data['title']	= 'Akurasi Peramalan';
+		$this->data['content']	= 'akurasi_peramalan';
+		$this->template($this->data, $this->module);
+	}
+
 	public function daftar_pengguna()
 	{
 		$this->load->model('pengguna_m');
@@ -204,12 +214,12 @@ class Admin extends MY_Controller
 	}
 
 	public function hasil_peramalan_fts(){
+		$this->load->model('kota_kabupaten_m');
 		if($this->POST('submit')){
 		   $tahun = array();  
            $jumlah_penderita = array();
            $hasil_peramlan = array();
 
-           $this->load->model('kota_kabupaten_m');
            $this->load->library('FuzzyTimeSeries');
            $this->load->model('penderita_tb_m');   
            $result = $this->penderita_tb_m->get_by_order("tahun","asc",["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')]);
@@ -230,7 +240,36 @@ class Admin extends MY_Controller
 
            $this->data['mse'] = $this->setMSE($jumlah_penderita,$hasil_peramlan,$tahun);
            $this->data['mape'] = $this->setMAPE($jumlah_penderita,$hasil_peramlan,$tahun);
-           
+           $this->load->model('record_peramalan_m');
+
+           foreach ($this->data['mse'] as $i => $mse)
+           {
+           		if ((string)$i == 'hasil')
+           		{
+           			break;
+           		}
+
+           		$check_record = $this->record_peramalan_m->get_row(['tahun'	=> $mse['tahun'], 'id_kota_kabupaten' => $this->POST('id_kota_kabupaten')]);
+           		$record = [
+       				'tahun'				=> $mse['tahun'],
+       				'id_kota_kabupaten'	=> $this->POST('id_kota_kabupaten'),
+       				'd1'				=> $konfigurasi['D1'],
+       				'd2'				=> $konfigurasi['D2'],
+       				'aktual'			=> $mse['aktual'],
+       				'ramal'				=> $mse['output'],
+       				'mse'				=> $mse['selisih'],
+       				'mape'				=> $this->data['mape'][$i]['selisih']
+       			];
+           		if (isset($check_record))
+           		{
+           			$this->record_peramalan_m->update($check_record->id_peramalan, $record);
+           		}
+           		else
+           		{
+           			$this->record_peramalan_m->insert($record);
+           		}
+           }
+
            $this->data['peramalan_fts'] = [
               "tahun" => $tahun,
               "data_real" => $jumlah_penderita,
