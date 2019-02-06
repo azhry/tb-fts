@@ -113,7 +113,7 @@ class FuzzyTimeSeries
        $set = [];
        $Dmax = max($this->data);
        $Dmin = min($this->data);
-       $this->interval = abs(round((($Dmax+$this->D1)-($Dmin+$this->D2))/$this->basis));
+       $this->interval = abs(round((($Dmax+$this->D2)-($Dmin-$this->D1))/$this->basis));
        for($i=1; $i<=$this->interval; $i++){
           $index = "A".$i;
           if($i == 1){
