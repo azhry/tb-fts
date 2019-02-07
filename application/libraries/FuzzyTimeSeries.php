@@ -106,14 +106,20 @@ class FuzzyTimeSeries
           $this->D1 = $konfigurasi["D1"];
           $this->D2 = $konfigurasi["D2"];
 	   }
-       return $cond;
+     $index_min = array_search(min($this->data), $this->data);
+     $index_max = array_search(max($this->data), $this->data);
+     $this->data[$index_min] = min($this->data)-$this->D1;
+     $this->data[$index_max] = max($this->data)+$this->D2;
+     // var_dump("anjing ".$index_min." max ".$index_max);
+
+     return $cond;
 	}
 
 	private function hitungInterval(){       
        $set = [];
        $Dmax = max($this->data);
        $Dmin = min($this->data);
-       $this->interval = abs(round((($Dmax+$this->D2)-($Dmin-$this->D1))/$this->basis));
+       $this->interval = abs(round((($Dmax+$this->D1)-($Dmin+$this->D2))/$this->basis));
        for($i=1; $i<=$this->interval; $i++){
           $index = "A".$i;
           if($i == 1){
