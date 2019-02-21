@@ -106,20 +106,21 @@ class FuzzyTimeSeries
           $this->D1 = $konfigurasi["D1"];
           $this->D2 = $konfigurasi["D2"];
 	   }
-     $index_min = array_search(min($this->data), $this->data);
-     $index_max = array_search(max($this->data), $this->data);
-     $this->data[$index_min] = min($this->data)-$this->D1;
-     $this->data[$index_max] = max($this->data)+$this->D2;
-     // var_dump("anjing ".$index_min." max ".$index_max);
+     // $index_min = array_search(min($this->data), $this->data);
+     // $index_max = array_search(max($this->data), $this->data);
+     // $this->data[$index_min] = min($this->data)-$this->D1;
+     // $this->data[$index_max] = max($this->data)+$this->D2;
+     // var_dump("test ".(round(14.4)*10)." ori ".$this->data[$index_min]);
 
      return $cond;
 	}
 
 	private function hitungInterval(){       
        $set = [];
-       $Dmax = max($this->data);
-       $Dmin = min($this->data);
-       $this->interval = abs(round((($Dmax+$this->D1)-($Dmin+$this->D2))/$this->basis));
+       $Dmax = round(max($this->data)/10)*10;
+       $Dmin = round(min($this->data)/10)*10;
+       $this->interval = abs(round((($Dmax-$Dmin)/$this->basis)));
+       // var_dump($this->interval." basis ".$this->basis);
        for($i=1; $i<=$this->interval; $i++){
           $index = "A".$i;
           if($i == 1){
@@ -130,7 +131,7 @@ class FuzzyTimeSeries
               $value = 0;
               for($j=0;$j<2;$j++){
               	 if($j == 0){
-                    $value = $set[$index_before][1];
+                    $value = $set[$index_before][1]+1;
                     $set[$index][$j] =$value;
               	 }else if($j == 1){
                     $set[$index][$j] = $value+$this->basis;
@@ -223,7 +224,7 @@ class FuzzyTimeSeries
         for($i=0;$i<sizeof($this->data);$i++){
            for($j=1;$j<=sizeof($fuzzy_set);$j++){
                $index = "A".$j;
-               if($this->data[$i] >= $fuzzy_set[$index][0] && $this->data[$i] < $fuzzy_set[$index][1]){
+               if($this->data[$i] >= $fuzzy_set[$index][0] && $this->data[$i] <= $fuzzy_set[$index][1]){
                    $himpunan_fuzzy[$i]["nilai"] = $this->data[$i];
                    $himpunan_fuzzy[$i]["fuzzy"] = $index;
                    break;

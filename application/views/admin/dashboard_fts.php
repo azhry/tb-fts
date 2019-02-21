@@ -31,7 +31,7 @@
 					<!-- BEGIN FORM-->
 					<?= form_open_multipart('admin/hasil_peramalan_fts', ['class' => 'form-horizontal']) ?>
 						<div class="form-body">
-							<div class="form-group">
+							<!-- <div class="form-group">
 								<label class="col-md-3 control-label">D1</label>
 								<div class="col-md-4">
 									<input type="number" required name="d1" class="form-control input-circle">
@@ -42,7 +42,7 @@
 								<div class="col-md-4">
 									<input type="number" required name="d2" class="form-control input-circle">
 								</div>
-							</div>
+							</div> -->
 							<div class="form-group">
 								<label class="col-md-3 control-label">Kota / Kabupaten</label>
 								<div class="col-md-4">

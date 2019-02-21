@@ -229,8 +229,8 @@ class Admin extends MY_Controller
            }
            array_push($tahun, ($tahun[sizeof($tahun)-1]+1));
    
-           $konfigurasi["D1"] = $this->input->post('d1');
-	       $konfigurasi["D2"] = $this->input->post('d2');
+           $konfigurasi["D1"] = 0; //TIDAK DIGUNAKAN
+	       $konfigurasi["D2"] = 0; //TIDAK DIGUNAKAN
 	       $log_hasil_pelatihan = $this->fuzzytimeseries->pelatihan($jumlah_penderita,$konfigurasi);
 	     
            array_push($hasil_peramlan, 0);
