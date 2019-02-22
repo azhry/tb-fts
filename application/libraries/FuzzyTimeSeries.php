@@ -117,10 +117,10 @@ class FuzzyTimeSeries
 
 	private function hitungInterval(){       
        $set = [];
-       $Dmax = round(max($this->data)/10)*10;
-       $Dmin = round(min($this->data)/10)*10;
+       $Dmax = ceil(max($this->data)/10)*10;
+       $Dmin = floor(min($this->data)/10)*10;
        $this->interval = abs(round((($Dmax-$Dmin)/$this->basis)));
-       // var_dump($this->interval." basis ".$this->basis);
+       // var_dump($Dmin." d-max ".$Dmax);
        for($i=1; $i<=$this->interval; $i++){
           $index = "A".$i;
           if($i == 1){
