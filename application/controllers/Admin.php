@@ -290,6 +290,8 @@ class Admin extends MY_Controller
 		$this->data['kota']		= $this->kota_kabupaten_m->get();
 		$this->data['title']	= 'Fuzzy Times Series';
 		$this->data['content']	= 'hasil_peramalan_fts';
+		$this->data['data_penderita']	= $result;
+		$this->data['data_kota']	= $this->kota_kabupaten_m->get(["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')]);
 		$this->template($this->data, $this->module);
 	}
 

@@ -35,10 +35,10 @@
 									Peramalan
 								</th>
 								<th style="text-align: center;">
-									MAPE
+									MSE
 								</th>
 								<th style="text-align: center;">
-									MSE
+									MAPE
 								</th>
 							</tr>
 						</thead>
