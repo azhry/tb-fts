@@ -52,36 +52,6 @@
 				</div>
 			</div>
 
-            <div class="row margin-top-10">
-        <div class="col-md-12">
-            <div class="portlet box blue">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="fa fa-database"></i>Data Kota/Kabupaten
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                        <div class="form-body">                       
-                            <table class="table">
-                                 <thead>
-                                     <th>Nama Kota/Kabupaten</th>
-                                     <th>Latitude</th>
-                                     <th>Longitude</th>
-                                 </thead>
-                                 <tbody>
-                                      <tr>
-                                          <td><?= $data_kota[0]->kota_kabupaten ?></td>
-                                          <td><?= $data_kota[0]->latitude ?></td>
-                                          <td><?= $data_kota[0]->longitude ?></td>
-                                      </tr>
-                                 </tbody>
-                            </table>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
       <div class="row margin-top-10">
         <div class="col-md-12">
             <div class="portlet box blue">

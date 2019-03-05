@@ -115,6 +115,23 @@ class FuzzyTimeSeries
      return $cond;
 	}
 
+  // Untuk membulatkan apakah kedalam skala ratusan atau ribuan
+  private function getSkala($value){
+     //Digunakan untuk membulatkan interval
+     $res = 0;
+     $count = strlen($value);
+     if($count == 1){
+       $res = 1;
+     }else if($count == 2){
+       $res = 10;
+     }else if($count == 3){
+       $res = 100;
+     }else if($count == 4){
+       $res = 1000;
+     }
+     return $res;
+  }
+
 	private function hitungInterval(){       
        $set = [];
        $Dmax = ceil(max($this->data)/10)*10;
@@ -124,17 +141,17 @@ class FuzzyTimeSeries
        for($i=1; $i<=$this->interval; $i++){
           $index = "A".$i;
           if($i == 1){
-              $set[$index][0] = $Dmin;
-              $set[$index][1] = $Dmin + $this->basis;
+              $set[$index][0] = floor($Dmin/100)*100;
+              $set[$index][1] = ceil(($Dmin + $this->basis)/100)*100;
           }else{
               $index_before = "A".($i-1);
               $value = 0;
               for($j=0;$j<2;$j++){
               	 if($j == 0){
-                    $value = $set[$index_before][1]+1;
+                    $value =  floor(($set[$index_before][1])/100)*100;
                     $set[$index][$j] =$value;
               	 }else if($j == 1){
-                    $set[$index][$j] = $value+$this->basis;
+                    $set[$index][$j] = ceil(($value+$this->basis)/100)*100;
               	 }
               }
           }
