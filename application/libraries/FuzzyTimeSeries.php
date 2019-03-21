@@ -142,7 +142,7 @@ class FuzzyTimeSeries
           $index = "A".$i;
           if($i == 1){
               $set[$index][0] = floor($Dmin/100)*100;
-              $set[$index][1] = ceil(($Dmin + $this->basis)/100)*100;
+              $set[$index][1] = ceil(($Dmin + $this->interval)/100)*100;
           }else{
               $index_before = "A".($i-1);
               $value = 0;
@@ -151,7 +151,7 @@ class FuzzyTimeSeries
                     $value =  floor(($set[$index_before][1])/100)*100;
                     $set[$index][$j] =$value;
               	 }else if($j == 1){
-                    $set[$index][$j] = ceil(($value+$this->basis)/100)*100;
+                    $set[$index][$j] = ceil(($value+$this->interval)/100)*100;
               	 }
               }
           }
