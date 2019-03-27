@@ -21,7 +21,7 @@ class FuzzyTimeSeries
 	   $result = null;
        if($this->setDataAtribut($data_latih, $konfigurasi)){
        	  $this->setBasis(max($this->data), min($this->data));
-	         $this->fuzzy  = $this->hitungInterval();
+	         $this->fuzzy  = $this->hitungInterval2();
 	         // $this->fuzzy = $this->reDivide($fuzzy_set);
 	         $himpunan_fuzzy = $this->tentukanHimpunanFuzzy($this->fuzzy);
 	         $fuzzy_logical_relationship = $this->fuzzyLogicalRelationship($himpunan_fuzzy);
@@ -132,17 +132,75 @@ class FuzzyTimeSeries
      return $res;
   }
 
+  private function hitungInterval2(){       
+       $set = [];
+       $Dmax = ceil(max($this->data)/10)*10;
+       $Dmin = floor(min($this->data)/10)*10;
+       $this->interval = abs(round((($Dmax-$Dmin)/$this->basis)));
+      
+
+       $start_index = floor($Dmin/100)*100;
+       $end_index   =  ceil($Dmax/100)*100;
+
+     //  var_dump($start_index." = ".$end_index);
+
+       $j = 0;
+       $i = 1;
+       while(true){
+         $index = "A".$i;
+          if($i == 1){
+              $set[$index][0] = floor($Dmin/100)*100;
+              $set[$index][1] = ceil(($set[$index][0] + $this->basis)/100)*100;
+          }else{
+              $index_before = "A".($i-1);
+              $value = 0;
+              for($j=0;$j<2;$j++){
+                 if($j == 0){
+                    $value =  floor(($set[$index_before][1])/100)*100;
+                    $set[$index][$j] =$value;
+                 }else if($j == 1){
+                    $set[$index][$j] = ceil(($value+$this->basis)/100)*100;
+                 }
+              }
+          }
+
+          if($set[$index][1] >= $end_index){
+             break;
+          }
+          $i++;      
+       }
+
+       $this->log["fuzzy"]= $set;
+
+       for($i=1;$i<=sizeof($set);$i++){
+          $index = "A".$i;
+          $count = 0;
+          for($j=0;$j<sizeof($this->data);$j++){
+            if($this->data[$j] >= $set[$index][0] && $this->data[$j] < $set[$index][1]){
+               $count++;
+            }
+          }
+          $counting_array[$index]["jumlah"] = $count;
+       }
+       $this->log["counting"] = $counting_array;
+
+       return $set;
+   }
+
 	private function hitungInterval(){       
        $set = [];
        $Dmax = ceil(max($this->data)/10)*10;
        $Dmin = floor(min($this->data)/10)*10;
        $this->interval = abs(round((($Dmax-$Dmin)/$this->basis)));
        // var_dump($Dmin." d-max ".$Dmax);
+        $start_index = floor($Dmin/100)*100;
+       $end_index   =  ceil($Dmax/100)*100;
+       var_dump($start_index." - ".$end_index);
        for($i=1; $i<=$this->interval; $i++){
           $index = "A".$i;
           if($i == 1){
               $set[$index][0] = floor($Dmin/100)*100;
-              $set[$index][1] = ceil(($Dmin + $this->interval)/100)*100;
+              $set[$index][1] = ceil(($set[$index][0] + $this->basis)/100)*100;
           }else{
               $index_before = "A".($i-1);
               $value = 0;
@@ -151,7 +209,7 @@ class FuzzyTimeSeries
                     $value =  floor(($set[$index_before][1])/100)*100;
                     $set[$index][$j] =$value;
               	 }else if($j == 1){
-                    $set[$index][$j] = ceil(($value+$this->interval)/100)*100;
+                    $set[$index][$j] = ceil(($value+$this->basis)/100)*100;
               	 }
               }
           }
@@ -170,8 +228,7 @@ class FuzzyTimeSeries
        }
        $this->log["counting"] = $counting_array;
 
-       return $set;
-   }
+       return $set;}
 
    private function reDivide($fuzzy_set){
        $counting_array = [];
