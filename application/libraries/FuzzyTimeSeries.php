@@ -82,7 +82,7 @@ class FuzzyTimeSeries
                            $forecast_value = $sum / sizeof($group);
                         }else{
                         	$forecast_value = null; // not define in fuzzy group
-                        	echo "<br><strong>value in fuzzy group not exist</strong><br>";
+                        	// echo "<br><strong>value in fuzzy group not exist</strong><br>";
                         }
                         
                         break;
@@ -333,10 +333,14 @@ class FuzzyTimeSeries
           $group = array();
           for($j=0;$j<sizeof($fuzzy_logical_relationship);$j++){
              if($fuzzy_logical_relationship[$j]["current_state"] == $index){
-                 array_push($group, $fuzzy_logical_relationship[$j]["next_state"]);
+                 if($fuzzy_logical_relationship[$j]["next_state"] != $index){
+                    array_push($group, $fuzzy_logical_relationship[$j]["next_state"]);
+                 }
              }
              if($fuzzy_logical_relationship[$j]["next_state"] == $index){
-                 array_push($group, $fuzzy_logical_relationship[$j]["current_state"]);
+                 if($fuzzy_logical_relationship[$j]["current_state"] != $index){
+                    array_push($group, $fuzzy_logical_relationship[$j]["current_state"]);
+                 }
              }
           }
           $flrg[$i]["fuzzy"] = $index;
