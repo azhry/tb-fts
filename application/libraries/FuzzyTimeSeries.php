@@ -136,11 +136,14 @@ class FuzzyTimeSeries
        $set = [];
        $Dmax = ceil(max($this->data)/10)*10;
        $Dmin = floor(min($this->data)/10)*10;
+       // var_dump($Dmax." - ".$Dmin);
        $this->interval = abs(round((($Dmax-$Dmin)/$this->basis)));
-      
+       // var_dump($this->interval);
 
        $start_index = floor($Dmin/100)*100;
-       $end_index   =  ceil($Dmax/100)*100;
+       $end_index   =  $Dmax;
+       // var_dump($start_index);
+       // var_dump($end_index);
 
      //  var_dump($start_index." = ".$end_index);
 
@@ -150,16 +153,16 @@ class FuzzyTimeSeries
          $index = "A".$i;
           if($i == 1){
               $set[$index][0] = floor($Dmin/100)*100;
-              $set[$index][1] = ceil(($set[$index][0] + $this->basis)/100)*100;
+              $set[$index][1] = ceil(($set[$index][0]/100)*100)+$this->basis;
           }else{
-              $index_before = "A".($i-1);
-              $value = 0;
+              $index_before   = "A".($i-1);
+              $value          = 0;
               for($j=0;$j<2;$j++){
                  if($j == 0){
-                    $value =  floor(($set[$index_before][1])/100)*100;
-                    $set[$index][$j] =$value;
+                    // $value =  floor(($set[$index_before][1])/100)*100;
+                    $set[$index][$j] =$set[$index_before][1];
                  }else if($j == 1){
-                    $set[$index][$j] = ceil(($value+$this->basis)/100)*100;
+                    $set[$index][$j] = ceil(($set[$index][0]/100)*100)+$this->basis;
                  }
               }
           }

@@ -22,6 +22,12 @@
 					<?= form_open_multipart('admin/tambah_data_penderita/'.$id_kota, ['class' => 'form-horizontal']) ?>
 						<div class="form-body">
 							<div class="form-group">
+								<label class="col-md-3 control-label">Triwulan</label>
+								<div class="col-md-4">
+									<input type="number" required name="triwulan" class="form-control input-circle">
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-md-3 control-label">Tahun</label>
 								<div class="col-md-4">
 									<input type="number" required name="tahun" class="form-control input-circle">

@@ -96,7 +96,8 @@ class Admin extends MY_Controller
 	           $this->data['penderita'] = [
 	                 "id_kota_kabupaten" => $id_kota,
 	                 "jumlah"=>$this->POST("jumlah"),
-	                 "tahun"=>$this->POST("tahun")
+	                 "tahun"=>$this->POST("tahun"),
+	                 "triwulan"=>$this->POST("triwulan")
 	           ];
 	           $this->Penderita_tb_m->insert($this->data['penderita']);
 	           $this->flashmsg('Penderita TB Berhasil Ditambahkan');

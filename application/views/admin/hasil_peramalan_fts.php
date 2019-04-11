@@ -66,6 +66,9 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center;">
+                                    Triwulan
+                                </th>
+                                <th style="text-align: center;">
                                     Tahun
                                 </th>
                                 <th style="text-align: center;">
@@ -76,6 +79,9 @@
                         <tbody>
                             <?php foreach ($data_penderita as $row): ?>
                                 <tr class="odd gradeX">
+                                    <td>
+                                        <center><?= $row->triwulan ?></center>
+                                    </td>
                                     <td>
                                         <center><?= $row->tahun ?></center>
                                     </td>
