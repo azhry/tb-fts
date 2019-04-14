@@ -66,13 +66,13 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center;">
-                                    Triwulan
+                                    Tahun <i class="fa fa-sort"></i>
                                 </th>
                                 <th style="text-align: center;">
-                                    Tahun
+                                    Triwulan <i class="fa fa-sort"></i>
                                 </th>
                                 <th style="text-align: center;">
-                                    Jumlah
+                                    Jumlah <i class="fa fa-sort"></i>
                                 </th>
                             </tr>
                         </thead>
@@ -80,10 +80,10 @@
                             <?php foreach ($data_penderita as $row): ?>
                                 <tr class="odd gradeX">
                                     <td>
-                                        <center><?= $row->triwulan ?></center>
-                                    </td>
-                                    <td>
                                         <center><?= $row->tahun ?></center>
+                                    </td>
+                                     <td>
+                                        <center><?= $row->triwulan ?></center>
                                     </td>
                                     <td>
                                         <center><?= $row->jumlah ?></center>
@@ -495,4 +495,12 @@ function checkCookie() {
      }
   }
 }
+</script>
+<script type="text/javascript" src="<?= base_url('assets/metronic') ?>/assets/global/plugins/select2/select2.min.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/metronic') ?>/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?= base_url('assets/metronic') ?>/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#sample_1').dataTable();
+    });
 </script>
