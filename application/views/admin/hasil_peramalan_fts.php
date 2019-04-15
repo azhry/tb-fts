@@ -66,13 +66,13 @@
                         <thead>
                             <tr>
                                 <th style="text-align: center;">
-                                    Tahun <i class="fa fa-sort"></i>
+                                    Tahun 
                                 </th>
                                 <th style="text-align: center;">
-                                    Triwulan <i class="fa fa-sort"></i>
+                                    Triwulan
                                 </th>
                                 <th style="text-align: center;">
-                                    Jumlah <i class="fa fa-sort"></i>
+                                    Jumlah
                                 </th>
                             </tr>
                         </thead>
@@ -495,12 +495,4 @@ function checkCookie() {
      }
   }
 }
-</script>
-<script type="text/javascript" src="<?= base_url('assets/metronic') ?>/assets/global/plugins/select2/select2.min.js"></script>
-<script type="text/javascript" src="<?= base_url('assets/metronic') ?>/assets/global/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="<?= base_url('assets/metronic') ?>/assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#sample_1').dataTable();
-    });
 </script>

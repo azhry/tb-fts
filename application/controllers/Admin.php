@@ -223,7 +223,7 @@ class Admin extends MY_Controller
 
            $this->load->library('FuzzyTimeSeries');
            $this->load->model('penderita_tb_m');   
-           $result = $this->penderita_tb_m->get_by_order("tahun","asc",["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')]);
+           $result = $this->penderita_tb_m->get_by_double_order("tahun","asc",'triwulan','asc',["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')]);
            foreach ($result as $row) {
            	  array_push($jumlah_penderita, $row->jumlah);
            	  array_push($tahun, $row->tahun);
@@ -291,7 +291,7 @@ class Admin extends MY_Controller
 		$this->data['kota']		= $this->kota_kabupaten_m->get();
 		$this->data['title']	= 'Fuzzy Times Series';
 		$this->data['content']	= 'hasil_peramalan_fts';
-		$this->data['data_penderita']	= $result;
+		$this->data['data_penderita']	= $this->penderita_tb_m->get_by_double_order("tahun","asc","triwulan","asc",["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')]);
 		$this->data['data_kota']	= $this->kota_kabupaten_m->get(["id_kota_kabupaten"=>$this->POST('id_kota_kabupaten')]);
 		$this->template($this->data, $this->module);
 	}

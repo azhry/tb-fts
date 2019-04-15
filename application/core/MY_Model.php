@@ -65,6 +65,20 @@ class MY_Model extends CI_Model
 		return $query->result();
 	}
 
+	public function get_by_double_order($ref, $order,$ref2, $order2, $cond = '')
+	{
+		if (is_array($cond))
+			$this->db->where($cond);
+		if (is_string($cond) && strlen($cond) > 3)
+			$this->db->where($cond);
+       
+		$this->db->order_by($ref, $order);
+		$this->db->order_by($ref2, $order2);
+		$query = $this->db->get($this->data['table_name']);
+
+		return $query->result();
+	}
+
 	public function get_last_row($cond = '', $order_by = null)
 	{
 		if (is_array($cond))
